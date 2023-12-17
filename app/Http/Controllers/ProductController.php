@@ -8,9 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index() {
+    public function index($id) {
         $products = Product::get();
         return view('admin.products.index', compact('products'));
+    }
+
+    public function show($id) {
+        $product = Product::findOrFail($id);
+
+        return view('admin.products.show', compact('product'));
     }
 
     public function create(){
@@ -39,8 +45,10 @@ class ProductController extends Controller
             'image' => 'storage/'.$path,
         ]);
 
-        return redirect()->back()->with('success', 'Product created successfully.');
+        return redirect('admin/products')->with('success', 'Product created successfully.');
     }
+
+
 
     public function edit($id) {
         $product = Product::findOrFail($id);

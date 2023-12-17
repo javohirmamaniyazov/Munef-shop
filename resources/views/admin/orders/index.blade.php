@@ -118,10 +118,6 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav navbar-nav-right">
-                        <li class="nav-item dropdown d-none d-lg-block">
-                            <a class="nav-link btn btn-success create-new-button"
-                                href="{{ route('products.create') }}">+ Create New Product</a>
-                        </li>
                         <li class="nav-item nav-settings d-none d-lg-block">
                             <a class="nav-link" href="#">
                                 <i class="mdi mdi-view-grid"></i>
@@ -276,45 +272,33 @@
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Products</h4>
+                                    <h4 class="card-title">Orders</h4>
                                     </p>
                                     <div class="table-responsive">
-                                        <table class="table table-striped">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th> Product image </th>
-                                                    <th> Product owner </th>
-                                                    <th> Product name </th>
-                                                    <th> Cost </th>
-                                                    <th> Action </th>
+                                                    <th>Full Name</th>
+                                                    <th>Mobie</th>
+                                                    <th>Product id</th>
+                                                    <th>Created Date</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($products as $product)
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img src="{{ asset($product->image) }}" alt="image" />
-                                                    </td>
-                                                    <td> </td>
-                                                    <td> {{ $product->name }} </td>
-                                                    <td>  {{ $product->cost }} so'm </td>
-                                                    <td class="d-flex">
-                                                        <a href="{{ route('products.edit', $product->id) }}"
-                                                            class="btn mr-2" style="background-color: orange">
-                                                            <i class="mdi mdi-lead-pencil"></i>Edit</a>
-                                                        <form
-                                                            action="{{ route('products.destroy',  $product->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger"
-                                                                onclick="return confirm('Are you sure you want to delete this product?')"><i class="mdi mdi-delete"></i>Delete</button>
-                                                        </form>
-
-                                                    </td>
-                                                </tr>
+                                                @foreach ($orders as $order)
+                                                    <tr>
+                                                        <td>{{ $order->fullname}}</td>
+                                                        <td>{{ $order->phone}}</td>
+                                                        <td>{{ $order->product_id}}</td>
+                                                        <td>{{ $order->created_at}}</td>
+                                                        <td><label class="badge badge-danger">Pending</label></td>
+                                                        <td>
+                                                            <button class="btn" style="color: orange">Change</button>
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
-
                                             </tbody>
                                         </table>
                                     </div>

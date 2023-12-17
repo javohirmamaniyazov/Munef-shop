@@ -111,6 +111,12 @@ a {
   font-weight: 500;
   line-height: normal;
 }
+.contact-cost{
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
 .contact-item{
   color: var(--primary-color);
   font-size: 16px;
@@ -227,7 +233,7 @@ a {
 .contact {
   display: flex;
   justify-content: space-between;
-  width: 728px;
+  width: 950px;
   margin: 0 auto;
   padding: 100px 0;
 }
@@ -272,7 +278,9 @@ a {
   font-weight: 700;
 }
 
-.aloqa button {
+
+
+.aloqa  button {
   font-weight: 700;
   background: #4e342e;
   width: 312px;
@@ -407,7 +415,7 @@ a {
   border-color: transparent;
   color: #fff;
 }
-.purchase-info button {
+.purchase-info a {
   font-weight: 700;
   background: #4e342e;
   border-radius: 8px;
