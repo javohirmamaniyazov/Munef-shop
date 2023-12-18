@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,11 @@ Route::get('/', function () {
 Route::get('product/{id}/order', [OrderController::class, 'create'])->name('orders');
 Route::post('product/{id}/order', [OrderController::class, 'store'])->name('order.create');
 
+// contact section
+Route::get('/contact', [DashboardController::class, 'contact'])->name('contact');
+
+// product show
+Route::get('/products/{id}/show', [ProductController::class, 'show'])->name('products.show');
 Route::get('/admin/dashboard', function () {
     return view('admin.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -38,7 +44,6 @@ Route::middleware('auth')->group(function () {
     // product section
     Route::get('admin/products', [ProductController::class, 'index'])->name('products');
     Route::get('admin/products/create', [ProductController::class, 'create'])->name('products.create');
-    Route::get('admin/products/{id}/show', [ProductController::class, 'show'])->name('products.show');
     Route::post('admin/products/create', [ProductController::class, 'store'])->name('products.store');
     Route::get('admin/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::post('admin/products/{id}/edit', [ProductController::class, 'update'])->name('products.update');

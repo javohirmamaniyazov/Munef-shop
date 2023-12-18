@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index($id) {
+    public function index() {
         $products = Product::get();
         return view('admin.products.index', compact('products'));
     }

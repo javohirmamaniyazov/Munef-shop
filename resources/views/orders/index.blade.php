@@ -1,69 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('styles/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Munef</title>
-</head>
-
-<body>
     <div id="preloader"></div>
-    <div class="header">
-        <div class="nav">
-            <input type="checkbox" id="nav-check" />
-            <a href="index.html" class="nav-header">
-                <div class="nav-title">
-                    Munef
-                </div>
-            </a>
-            <div class="nav-btn">
-                <div class="switch_lang_mob">
-                    <div class="switch_lang">
-                        <div class="selected_lang" id="selectedLang2">
-                            <img src="./img/uzbflag.png" alt="">Uzb
-                        </div>
-                        <div class="selection_lang" id="languageOptions2" style="display: none;">
-                            <a href="contact.html" class="sl1" id="uzbLang2"><img src="./img/uzbflag.png"
-                                    alt="">Uzb</a>
-                            <a href="./rus/contact.html" class="sl2" id="rusLang2"><img src="./img/rusflag.png"
-                                    alt="">Rus</a>
-                        </div>
-                    </div>
-                </div>
-                <label for="nav-check">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </label>
-            </div>
-            <nav class="nav-links">
-                <a href="index.html">
-                    Pishiriqlar
-                </a>
-                <a href="index.html#about">Biz haqimizda</a>
-                <a href="index.html#fikrlar">Mijozlar fikri</a>
-                <div class="switch_lang_des">
-                    <div class="switch_lang">
-                        <div class="selected_lang" id="selectedLang">
-                            <img src="./img/uzbflag.png" alt="">Uzb
-                        </div>
-                        <div class="selection_lang" id="languageOptions" style="display: none;">
-                            <a href="contact.html" class="sl1" id="uzbLang"><img src="./img/uzbflag.png"
-                                    alt="">Uzb</a>
-                            <a href="./rus/contact.html" class="sl2" id="rusLang"><img src="./img/rusflag.png"
-                                    alt="">Rus</a>
-                        </div>
-                    </div>
-                </div>
-                <a href="contact.html" class="contact-btn">Bog'lanish</a>
-            </nav>
-        </div>
-    </div>
+    @include('layouts.app')
+    @include('layouts.navigation')
     <div class="body">
         <div class="breadcrumbs">
             <div class="bc_item1">Home</div>
