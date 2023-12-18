@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('welcome', compact('products'));
 });
 
+Route::get('/rus', [DashboardController::class, 'rusWelcome']);
+Route::get('/rus/products/{id}/show', [DashboardController::class, 'rusShow'])->name('products.rusShow');
+
+
 // order section
 Route::get('product/{id}/order', [OrderController::class, 'create'])->name('orders');
 

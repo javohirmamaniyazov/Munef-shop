@@ -14,7 +14,7 @@
                     </div>
                     <div class="selection_lang" id="languageOptions2" style="display: none;">
                         <a href="/" class="sl1" id="uzbLang2"><img src="{{ asset('img/uzbflag.png')}}" alt="">Uzb</a>
-                        <a href="./rus//" class="sl2" id="rusLang2"><img src="{{ asset('img/rusflag.png')}}" alt="">Rus</a>
+                        <a href="{{ url('/rus')}}" class="sl2" id="rusLang2"><img src="{{ asset('img/rusflag.png')}}" alt="">Rus</a>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="selection_lang" id="languageOptions" style="display: none;">
                         <a href="/" class="sl1" id="uzbLang"><img src="{{ asset('img/uzbflag.png') }}" alt="">Uzb</a>
-                        <a href="./rus//" class="sl2" id="rusLang"><img src="{{ asset('img/rusflag.png') }}" alt="">Rus</a>
+                        <a href="{{ url('/rus')}}" class="sl2" id="rusLang"><img src="{{ asset('img/rusflag.png') }}" alt="">Rus</a>
                     </div>
                 </div>
             </div>
