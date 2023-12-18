@@ -1,5 +1,4 @@
 @include('admin.layouts.app')
-
 <div class="container-scroller">
     <!-- partial:../../partials/_sidebar.html -->
     @include('admin.layouts.sidebar')
@@ -14,42 +13,58 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Update Product</h4>
-                                <form action="{{ route('products.update', $product->id) }}" method="post"
-                                    enctype="multipart/form-data">
+                                <h4 class="card-title">Edit Product</h4>
+                                <form class="forms-sample" action="{{ route('products.update', $product->id) }}"
+                                    method="post" enctype="multipart/form-data">
                                     @csrf
+
                                     <div class="form-group">
                                         <label for="exampleInputName1">Product Name</label>
-                                        <input type="text" value="{{ old('name', $product->name) }}" name="name"
-                                            class="form-control" id="exampleInputName1" placeholder="Product Name">
+                                        <input type="text" name="name" class="form-control" id="exampleInputName1"
+                                            placeholder="Product Name" value="{{ old('name', $product->name) }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail3">Product Cost</label>
-                                        <input type="number" value="{{ old('name', $product->cost) }}" name="cost"
-                                            class="form-control" id="exampleInputEmail3" placeholder="Product Cost">
+                                        <input type="number" name="cost" class="form-control"
+                                            id="exampleInputEmail3" placeholder="Product Cost"
+                                            value="{{ old('cost', $product->cost) }}">
                                     </div>
 
                                     <div class="form-group">
-                                        {{-- <img src="{{ asset($product->image) }}" alt="{{ $product->name}}"> --}}
-                                        <label>File upload</label>
-                                        <input type="file" name="image" class="file-upload-default">
-                                        <div class="input-group col-xs-12">
-                                            <input type="text" value="{{ $product->image }}" name="image"
-                                                class="form-control file-upload-info" disabled
-                                                placeholder="Product Image">
-                                            <span class="input-group-append">
-                                                <button class="file-upload-browse btn btn-primary"
-                                                    type="button">Upload</button>
-                                            </span>
-                                        </div>
+                                        <label for="imageInput">File upload</label><br>
+                                        <input class="form-control file-upload-info" type="file" name="image"
+                                            id="imageInput">
                                     </div>
+
+                                    <div class="form-group" id="ingredients-container">
+                                        <label for="ingredients">Ingredients</label>
+
+                                        @php
+                                            // Decode JSON string to an array
+                                            $ingredients = json_decode($product->ingredients, true);
+                                        @endphp
+
+                                        @foreach ($ingredients as $ingredient)
+                                            <div class="ingredient-row" style="display: flex;">
+                                                <input type="text" name="ingredients[]" class="form-control mb-1"
+                                                    placeholder="Enter the Ingredient" value="{{ $ingredient }}">
+                                                <button type="button" class="btn remove-ingredient"><i
+                                                        style="font-size: 30px; margin: 0;"
+                                                        class="mdi mdi-close-box"></i></button>
+                                            </div>
+                                        @endforeach
+
+                                        <button type="button" style="margin: 0px" class="btn add-ingredient">
+                                            <i style="font-size: 30px; margin: 0;" class="mdi mdi-plus-box"></i>
+                                        </button>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="exampleTextarea1">Description</label>
-                                        <textarea class="form-control" name="description" id="exampleTextarea1" placeholder="Type...." rows="4">{{ old('name', $product->description) }}</textarea>
+                                        <textarea class="form-control" name="description" id="exampleTextarea1" placeholder="Type...." rows="4">{{ old('description', $product->description) }}</textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                    <a href="{{ route('products.edit', $product->id) }}"
-                                        class="btn btn-dark">Cancel</a>
+                                    <button type="submit" class="btn btn-primary mr-2">Update</button>
+                                    <a href="{{ route('products') }}" class="btn btn-dark">Cancel</a>
                                 </form>
                             </div>
                         </div>
@@ -57,20 +72,70 @@
                 </div>
             </div>
             <!-- content-wrapper ends -->
-            <!-- partial:../../partials/_footer.html -->
-            <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
-                        bootstrapdash.com 2020</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
-                            href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap
-                            admin templates</a> from Bootstrapdash.com</span>
-                </div>
-            </footer>
-            <!-- partial -->
         </div>
         <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
 </div>
 <!-- container-scroller -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let ingredientsContainer = document.getElementById('ingredients-container');
+    let addIngredientButton = document.querySelector('.add-ingredient');
+
+    addIngredientButton.addEventListener('click', function() {
+        createIngredientRow();
+    });
+
+    function createIngredientRow() {
+        let ingredientRow = document.createElement('div');
+        ingredientRow.classList.add('ingredient-row');
+
+        let input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'ingredients[]';
+        input.classList.add('form-control');
+        input.placeholder = 'Enter Ingredient';
+
+        let closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.classList.add('btn', 'remove-ingredient');
+        closeButton.innerHTML = "<i style='font-size: 30px; margin: 0;' class='mdi mdi-close-box'></i>";
+
+        ingredientRow.appendChild(input);
+        ingredientRow.appendChild(closeButton);
+        ingredientsContainer.insertBefore(ingredientRow, addIngredientButton);
+
+        closeButton.addEventListener('click', function() {
+            if (input.value === '') {
+                // If the input is empty, it's a newly created ingredient, just remove from the DOM
+                ingredientsContainer.removeChild(ingredientRow);
+            } else {
+                // If the input has a value, it's an existing ingredient, perform deletion
+                deleteIngredient(input.value, ingredientRow);
+            }
+        });
+    }
+
+    function deleteIngredient(ingredientValue, ingredientRow) {
+        // Perform AJAX request to delete ingredient from the database
+        fetch('/delete-ingredient', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ingredient: ingredientValue }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Remove the ingredient row from the DOM
+            ingredientsContainer.removeChild(ingredientRow);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+});
+
+</script>

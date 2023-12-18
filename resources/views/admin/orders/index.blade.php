@@ -15,7 +15,6 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Orders</h4>
-                                </p>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -35,11 +34,52 @@
                                                     <td>{{ $order->phone }}</td>
                                                     <td>{{ $order->product_name }}</td>
                                                     <td>{{ $order->created_at }}</td>
-                                                    <td><label class="badge badge-danger">Pending</label></td>
+                                                    @if ($order->status == 'In Progress')
+                                                        <td><label class="badge badge-warning">In progress</label></td>
+                                                    @endif
+                                                    @if ($order->status == 'Complete')
+                                                        <td><label class="badge badge-success">Complete</label></td>
+                                                    @endif
                                                     <td>
-                                                        <button class="btn" style="color: orange">Change</button>
+                                                        <button class="btn btn-info" data-toggle="modal"
+                                                            data-target="#changeOrderModal{{ $order->id }}">Change</button>
                                                     </td>
                                                 </tr>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="changeOrderModal{{ $order->id }}"
+                                                    tabindex="-1" role="dialog"
+                                                    aria-labelledby="changeOrderModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="changeOrderModalLabel">
+                                                                    Change Order Status</h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to change the order status?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Cancel</button>
+                                                                <form method="POST"
+                                                                    action="{{ route('admin.orders.changeStatus', $order->id) }}">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <input type="hidden" name="status"
+                                                                        value="Complete">
+                                                                    <button type="submit"
+                                                                        class="btn btn-success">Complete</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Modal -->
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -47,7 +87,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <!-- content-wrapper ends -->

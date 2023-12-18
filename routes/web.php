@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,9 @@ Route::get('/contact', [DashboardController::class, 'contact'])->name('contact')
 // product show
 Route::get('/products/{id}/show', [ProductController::class, 'show'])->name('products.show');
 Route::get('/admin/dashboard', function () {
-    return view('admin.index');
+    $orders = Order::get();
+    $products = Product::getProduct()->get();
+    return view('admin.index', compact('orders', 'products'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -56,6 +59,8 @@ Route::middleware('auth')->group(function () {
 
     //orders
     Route::get('admin/orders', [OrderController::class, 'index'])->name('orders.show');
+    Route::put('admin/orders/{orderId}/change-status', [OrderController::class, 'changeStatus'])
+        ->name('admin.orders.changeStatus');
 });
 
 require __DIR__ . '/auth.php';

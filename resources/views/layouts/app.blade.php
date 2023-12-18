@@ -10,7 +10,24 @@
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <style>
+        @font-face {
+            font-family: "Kapakana Regular";
+            font-style: normal;
+            font-weight: normal;
+            src: local("Kapakana Regular"),
+                url("{{ asset('fonts/Kapakana[wght].woff') }}") format("woff");
+            /* {{ asset('fonts/your-font.woff') }} */
+        }
 
+        @font-face {
+            font-family: 'GeneralSans-Variable';
+            src: url("{{ asset('fonts/GeneralSans-Variable.ttf') }}") format('truetype');
+            font-weight: 200 700;
+            font-display: swap;
+            font-style: normal;
+        }
+    </style>
 </head>
 
 <body>

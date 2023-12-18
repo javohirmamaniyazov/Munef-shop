@@ -26,10 +26,25 @@ class OrderController extends Controller
         Order::create([
             'fullname' => $request->input('fullname'),
             'phone' => $request->input('phone'),
+            'status' => 'In Progress',
             'product_id' => $product->id
         ]);
 
         return redirect('/')->with('success', 'Product created successfully.');
+    }
+
+    public function changeStatus(Request $request, $orderId)
+    {
+        $request->validate([
+            'status' => 'required|in:Complete,Cancel', // Add any other valid statuses
+        ]);
+
+        $order = Order::findOrFail($orderId);
+
+        // Update order status
+        $order->update(['status' => $request->input('status')]);
+
+        return redirect()->back()->with('success', 'Order status changed successfully.');
     }
 
     public function storeWithoutProduct(Request $request)
