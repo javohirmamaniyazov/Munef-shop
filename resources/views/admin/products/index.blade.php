@@ -21,8 +21,8 @@
                                             <thead>
                                                 <tr>
                                                     <th> Product image </th>
-                                                    <th> Product owner </th>
-                                                    <th> Product name </th>
+                                                    <th> Product owner / Создатель Продукта </th>
+                                                    <th> Product name  / Названия Продукта</th>
                                                     <th> Cost </th>
                                                     <th> Action </th>
                                                 </tr>
@@ -34,7 +34,7 @@
                                                         <img src="{{ asset($product->image) }}" alt="image" />
                                                     </td>
                                                     <td> {{ $product->user_name}}</td>
-                                                    <td> {{ $product->name }} </td>
+                                                    <td> {{ $product->name }} - {{ $product->rus_name}} </td>
                                                     <td>  {{ $product->cost }} so'm </td>
                                                     <td class="d-flex" style="margin-top: 10px; border: none;">
                                                         <a href="{{ route('products.edit', $product->id) }}"

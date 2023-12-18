@@ -18,10 +18,19 @@
                                     method="post" enctype="multipart/form-data">
                                     @csrf
 
-                                    <div class="form-group">
-                                        <label for="exampleInputName1">Product Name</label>
-                                        <input type="text" name="name" class="form-control" id="exampleInputName1"
-                                            placeholder="Product Name" value="{{ old('name', $product->name) }}">
+                                    <div class="d-flex">
+                                        <div class="form-group col-6" style="margin-left: -10px;">
+                                            <label for="exampleInputName1">Product Name</label>
+                                            <input type="text" name="name" class="form-control"
+                                                id="exampleInputName1" placeholder="Product Name"
+                                                value="{{ old('name', $product->name) }}">
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="exampleInputName1">Названия Продукта</label>
+                                            <input type="text" name="rus_name" class="form-control"
+                                                id="exampleInputName1" placeholder="Названия Продукта"
+                                                value="{{ old('rus_name', $product->rus_name) }}">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail3">Product Cost</label>
@@ -40,7 +49,6 @@
                                         <label for="ingredients">Ingredients</label>
 
                                         @php
-                                            // Decode JSON string to an array
                                             $ingredients = json_decode($product->ingredients, true);
                                         @endphp
 
@@ -48,9 +56,7 @@
                                             <div class="ingredient-row" style="display: flex;">
                                                 <input type="text" name="ingredients[]" class="form-control mb-1"
                                                     placeholder="Enter the Ingredient" value="{{ $ingredient }}">
-                                                <button type="button" class="btn remove-ingredient"><i
-                                                        style="font-size: 30px; margin: 0;"
-                                                        class="mdi mdi-close-box"></i></button>
+                                                
                                             </div>
                                         @endforeach
 
@@ -59,10 +65,17 @@
                                         </button>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="exampleTextarea1">Description</label>
-                                        <textarea class="form-control" name="description" id="exampleTextarea1" placeholder="Type...." rows="4">{{ old('description', $product->description) }}</textarea>
+                                    <div class="d-flex">
+                                        <div class="form-group col-6" style="margin-left: -10px;">
+                                            <label for="exampleTextarea1">Description</label>
+                                            <textarea class="form-control" name="description" id="exampleTextarea1" placeholder="Type...." rows="4">{{ old('description', $product->description) }}</textarea>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="exampleTextarea1">Описание</label>
+                                            <textarea class="form-control" name="description" id="exampleTextarea1" placeholder="Описание...." rows="4">{{ old('rus_description', $product->rus_description) }}</textarea>
+                                        </div>
                                     </div>
+
                                     <button type="submit" class="btn btn-primary mr-2">Update</button>
                                     <a href="{{ route('products') }}" class="btn btn-dark">Cancel</a>
                                 </form>
@@ -81,61 +94,58 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    let ingredientsContainer = document.getElementById('ingredients-container');
-    let addIngredientButton = document.querySelector('.add-ingredient');
+        let ingredientsContainer = document.getElementById('ingredients-container');
+        let addIngredientButton = document.querySelector('.add-ingredient');
 
-    addIngredientButton.addEventListener('click', function() {
-        createIngredientRow();
+        addIngredientButton.addEventListener('click', function() {
+            createIngredientRow();
+        });
+
+        function createIngredientRow() {
+            let ingredientRow = document.createElement('div');
+            ingredientRow.classList.add('ingredient-row', 'd-flex');
+
+            let input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'ingredients[]';
+            input.classList.add('form-control');
+            input.placeholder = 'Enter Ingredient';
+
+            let closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.classList.add('btn', 'remove-ingredient');
+            closeButton.innerHTML = "<i style='font-size: 30px; margin: 0;' class='mdi mdi-close-box'></i>";
+
+            ingredientRow.appendChild(input);
+            ingredientRow.appendChild(closeButton);
+            ingredientsContainer.insertBefore(ingredientRow, addIngredientButton);
+
+            closeButton.addEventListener('click', function() {
+                if (input.value === '') {
+                    ingredientsContainer.removeChild(ingredientRow);
+                } else {
+                    deleteIngredient(input.value, ingredientRow);
+                }
+            });
+        }
+
+        function deleteIngredient(ingredientValue, ingredientRow) {
+            fetch('/delete-ingredient', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ingredient: ingredientValue
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    ingredientsContainer.removeChild(ingredientRow);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
     });
-
-    function createIngredientRow() {
-        let ingredientRow = document.createElement('div');
-        ingredientRow.classList.add('ingredient-row');
-
-        let input = document.createElement('input');
-        input.type = 'text';
-        input.name = 'ingredients[]';
-        input.classList.add('form-control');
-        input.placeholder = 'Enter Ingredient';
-
-        let closeButton = document.createElement('button');
-        closeButton.type = 'button';
-        closeButton.classList.add('btn', 'remove-ingredient');
-        closeButton.innerHTML = "<i style='font-size: 30px; margin: 0;' class='mdi mdi-close-box'></i>";
-
-        ingredientRow.appendChild(input);
-        ingredientRow.appendChild(closeButton);
-        ingredientsContainer.insertBefore(ingredientRow, addIngredientButton);
-
-        closeButton.addEventListener('click', function() {
-            if (input.value === '') {
-                // If the input is empty, it's a newly created ingredient, just remove from the DOM
-                ingredientsContainer.removeChild(ingredientRow);
-            } else {
-                // If the input has a value, it's an existing ingredient, perform deletion
-                deleteIngredient(input.value, ingredientRow);
-            }
-        });
-    }
-
-    function deleteIngredient(ingredientValue, ingredientRow) {
-        // Perform AJAX request to delete ingredient from the database
-        fetch('/delete-ingredient', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ ingredient: ingredientValue }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Remove the ingredient row from the DOM
-            ingredientsContainer.removeChild(ingredientRow);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-});
-
 </script>

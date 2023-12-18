@@ -27,7 +27,9 @@ class ProductController extends Controller
         //  dd($request->all());
          $request->validate([
             'name' => 'required|string|max:255',
+            'rus_name' => 'required|string|max:255',
             'description' => 'required|string|max:2000',
+            'rus_description' => 'required|string|max:2000',
             'cost' => 'required|string',
             'image' => 'required|mimes:jpeg,png,jpg|max:5120',
             'ingredients' => 'required|array',
@@ -42,7 +44,9 @@ class ProductController extends Controller
 
         Product::create([
             'name' => $request->input('name'),
+            'rus_name' => $request->input('rus_name'),
             'description' => $request->input('description'),
+            'rus_description' => $request->input('rus_description'),
             'cost' => $request->input('cost'),
             'ingredients' => $ingredients,
             'user_id' => Auth::user()->id,
@@ -65,14 +69,18 @@ class ProductController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'rus_name' => 'required|string|max:255',
             'description' => 'required|string|max:2000',
+            'rus_description' => 'required|string|max:2000',
             'cost' => 'required|string',
             'image' => 'nullable|mimes:jpeg,png,jpg|max:5120'
         ]);
 
         $product->update([
             'name' => $request->input('name'),
+            'rus_name' => $request->input('rus_name'),
             'description' => $request->input('description'),
+            'rus_description' => $request->input('rus_description'),
             'cost' => $request->input('cost'),
         ]);
 
