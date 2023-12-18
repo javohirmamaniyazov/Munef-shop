@@ -26,9 +26,7 @@
                 }px)`;
             }
 
-            window.addEventListener("resize", slideImage);
-
-            // Rest of your existing script...
+            // window.addEventListener("resize", slideImage);
             document.getElementById("productLink").addEventListener("click", function() {
                 document.getElementById("loadingGif").style.display = "block";
             });
@@ -55,16 +53,15 @@
                             <div class="img-display">
                                 <div class="img-showcase">
                                     @foreach ($product->productImages as $item)
-                                        <img src="{{ asset($item->image) }}" alt="">
+                                        <img src="{{ asset($item->image) }}">
                                     @endforeach
-
                                 </div>
                             </div>
                             <div class="img-select">
                                 @foreach ($product->productImages as $item)
                                     <div class="img-item">
                                         <a href="#" data-id="{{ $item->id }}">
-                                            <img src="{{ asset($item->image) }}" style="width: 100px;" alt="shoe image">
+                                            <img src="{{ asset($item->image) }}" style="width: 100px;"  alt="shoe image">
                                         </a>
                                     </div>
                                 @endforeach
@@ -79,7 +76,6 @@
                             <p style="min-height: 110px;">{{ $product->description }}</p>
                             <h3 class="tar"> Tarkibi</h3>
                             <div class="inf">
-
                                 <ul>
                                     @foreach (json_decode($product->ingredients) as $ingredient)
                                         <li>{{ $ingredient }}</li>

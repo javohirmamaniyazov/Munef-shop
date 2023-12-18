@@ -18,6 +18,7 @@ class Product extends Model
         'rus_description',
         'cost',
         'ingredients',
+        'rusIngredients',
         'user_id'
     ];
 

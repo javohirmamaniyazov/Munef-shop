@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->text('rus_description');
             $table->json('ingredients')->nullable();
+            $table->json('rusIngredients')->nullable();
             $table->integer('cost');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

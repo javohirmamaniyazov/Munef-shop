@@ -38,24 +38,33 @@
 
                                         <div class="form-group">
                                             <label for="imageInput">File upload</label><br>
-                                            <input class="form-control file-upload-info" type="file" name="image[]" multiple
-                                                id="imageInput">
+                                            <input class="form-control file-upload-info" type="file" name="image[]"
+                                                multiple id="imageInput">
                                         </div>
-
-                                        <div class="form-group" id="ingredients-container">
-                                            <label for="ingredients">Ingredients</label>
-                                            <div class="ingredient-row" style="display: flex;">
-                                                <input type="text" name="ingredients[]" class="form-control mb-1"
-                                                    placeholder="Enter the Ingredient">
+                                        <div class="d-flex">
+                                            <div class="form-group col-6" id="ingredients-container">
+                                                <label for="ingredients">Ingredients</label>
+                                                <div class="ingredient-row" style="display: flex;">
+                                                    <input type="text" name="ingredients[]" class="form-control mb-1"
+                                                        placeholder="Enter the Ingredient">
+                                                </div>
                                             </div>
-                                            <button type="button" style="margin: 0px" class="btn add-ingredient">
-                                                <i style="font-size: 30px; margin: 0;" class="mdi mdi-plus-box"></i>
-                                            </button>
+                                            <div class="form-group col-6" id="rus-ingredients-container">
+                                                <label for="ingredients">Ингредиенты</label>
+                                                <div class="rus-ingredient-row" style="display: flex;">
+                                                    <input type="text" name="rusIngredients[]"
+                                                        class="form-control mb-1" placeholder="Введите ингредиент">
+                                                </div>
+                                            </div>
                                         </div>
+                                        <button type="button" style="margin: 0px" class="btn add-ingredient">
+                                            <i style="font-size: 30px; margin: 0;" class="mdi mdi-plus-box"></i>
+                                        </button>
+
 
                                         <div class="d-flex">
                                             <div class="form-group col-6" style="margin-left: -10px;">
-                                                <label for="exampleTextarea1" >Description</label>
+                                                <label for="exampleTextarea1">Description</label>
                                                 <textarea class="form-control" name="description" id="exampleTextarea1" placeholder="Type...." rows="4"></textarea>
                                             </div>
                                             <div class="form-group col-6">
@@ -81,18 +90,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let ingredientsContainer = document.getElementById('ingredients-container');
             let addIngredientButton = document.querySelector('.add-ingredient');
 
             addIngredientButton.addEventListener('click', function() {
+                appendIngredientRow('ingredients-container', 'ingredients[]');
+                appendIngredientRow('rus-ingredients-container', 'rusIngredients[]');
+            });
+
+            function appendIngredientRow(containerId, inputName) {
                 let ingredientRow = document.createElement('div');
                 ingredientRow.classList.add('ingredient-row', 'd-flex');
 
                 let input = document.createElement('input');
                 input.type = 'text';
-                input.name = 'ingredients[]';
-                input.classList.add('form-control');
-                input.placeholder = 'Enter Ingredient';
+                input.name = inputName;
+                input.classList.add('form-control', 'mb-1');
+                if (inputName === 'ingredients[]') {
+                    input.placeholder = 'Enter Ingredient';
+                } else {
+                    input.placeholder = 'Введите ингредиент';
+                }
 
                 let closeButton = document.createElement('button');
                 closeButton.type = 'button';
@@ -102,11 +119,13 @@
 
                 ingredientRow.appendChild(input);
                 ingredientRow.appendChild(closeButton);
-                ingredientsContainer.insertBefore(ingredientRow, addIngredientButton);
+
+                let ingredientsContainer = document.getElementById(containerId);
+                ingredientsContainer.appendChild(ingredientRow);
 
                 closeButton.addEventListener('click', function() {
                     ingredientsContainer.removeChild(ingredientRow);
                 });
-            });
+            }
         });
     </script>
