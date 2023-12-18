@@ -30,7 +30,7 @@
                     @foreach ($products as $product)
                         <div class="pcard">
                             <a href="{{ route('products.show', $product->id) }}">
-                                <img src="{{ $product->image }}" class="pcard-img" alt="">
+                                <img  src="{{ asset($product->productImages[0]->image) }}" alt="">
                             </a>
                             <div class="pcard-title">
                                 {{ $product->name }}

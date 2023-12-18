@@ -16,7 +16,6 @@ class Product extends Model
         'rus_name',
         'description',
         'rus_description',
-        'image',
         'cost',
         'ingredients',
         'user_id'
@@ -31,5 +30,9 @@ class Product extends Model
     {
         return self::select('products.*', 'users.name as user_name')
             ->join('users', 'users.id', '=', 'products.user_id');
+    }
+
+    public function productImages() {
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
 }

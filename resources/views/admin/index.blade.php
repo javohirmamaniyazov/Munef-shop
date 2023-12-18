@@ -53,10 +53,11 @@
                                         <h6 class="mb-1">Creating Products</h6>
                                         <p class="text-muted mb-0">Lates Product:
                                             <?php
-                                            $latestProduct = App\Models\Product::latest()->first();
-                                            $lastProductDate = date('j F Y', strtotime($latestProduct->created_at));
-                                            echo $lastProductDate;
-                                            ?></p>
+                                            // $latestProduct = App\Models\Product::latest()->first();
+                                            // $lastProductDate = date('j F Y', strtotime($latestProduct->created_at));
+                                            // echo $lastProductDate;
+                                            ?>
+                                        </p>
                                     </div>
 
                                 </div>
@@ -64,11 +65,13 @@
                                     class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
                                     <div class="text-md-center text-xl-left">
                                         <h6 class="mb-1">Sold Orders</h6>
-                                        <p class="text-muted mb-0">Latest Order: <?php
-                                        $latestOrder = App\Models\Order::latest()->first();
-                                        $lastOrderDate = date('j F Y', strtotime($latestOrder->created_at));
-                                        echo $lastOrderDate;
-                                        ?></p>
+                                        <p class="text-muted mb-0">Latest Order:
+                                            <?php
+                                            // $latestOrder = App\Models\Order::latest()->first();
+                                            // $lastOrderDate = date('j F Y', strtotime($latestOrder->created_at));
+                                            // echo $lastOrderDate;
+                                            ?>
+                                        </p>
                                     </div>
 
                                 </div>

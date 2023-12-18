@@ -38,7 +38,7 @@
 
                                         <div class="form-group">
                                             <label for="imageInput">File upload</label><br>
-                                            <input class="form-control file-upload-info" type="file" name="image"
+                                            <input class="form-control file-upload-info" type="file" name="image[]" multiple
                                                 id="imageInput">
                                         </div>
 

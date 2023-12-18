@@ -2,6 +2,42 @@
     @include('layouts.app')
     @include('layouts.navigation')
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imgs = document.querySelectorAll(".img-select a");
+            const imgBtns = [...imgs];
+            let imgId = 0;
+
+            imgBtns.forEach((imgItem) => {
+                imgItem.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    imgId = parseInt(imgItem.dataset.id);
+                    slideImage();
+                });
+            });
+
+            function slideImage() {
+                const displayWidth = document.querySelector(
+                    ".img-showcase img:first-child"
+                ).clientWidth;
+
+                document.querySelector(".img-showcase").style.transform = `translateX(${
+                    -(imgId - 1) * displayWidth
+                }px)`;
+            }
+
+            window.addEventListener("resize", slideImage);
+
+            // Rest of your existing script...
+            document.getElementById("productLink").addEventListener("click", function() {
+                document.getElementById("loadingGif").style.display = "block";
+            });
+
+            window.addEventListener("load", function() {
+                document.getElementById("loadingGif").style.display = "none";
+            });
+        });
+    </script>
     <div class="body">
 
         <div class="breadcrumbs">
@@ -18,39 +54,20 @@
                         <div class="product-imgs">
                             <div class="img-display">
                                 <div class="img-showcase">
-                                    <img src="{{ asset($product->image) }}" alt="shoe image">
-                                    {{-- <img src="{{ asset('img/Rectangle 23.png') }}" alt="shoe image">
-                                    <img src="{{ asset('img/Rectangle 24.png') }}" alt="shoe image">
-                                    <img src="{{ asset('img/Rectangle 25.png') }}" alt="shoe image">
-                                    <img src="{{ asset('img/Rectangle 26.png') }}" alt="shoe image"> --}}
+                                    @foreach ($product->productImages as $item)
+                                        <img src="{{ asset($item->image) }}" alt="">
+                                    @endforeach
+
                                 </div>
                             </div>
                             <div class="img-select">
-                                <div class="img-item">
-                                    <a href="#" data-id="1">
-                                        <img src="{{ asset($product->image) }}" alt="shoe image">
-                                    </a>
-                                </div>
-                                <div class="img-item">
-                                    <a href="#" data-id="2">
-                                        <img src="{{ asset('img/Rectangle 23.png') }}" alt="shoe image">
-                                    </a>
-                                </div>
-                                <div class="img-item">
-                                    <a href="#" data-id="3">
-                                        <img src="{{ asset('img/Rectangle 24.png') }}" alt="shoe image">
-                                    </a>
-                                </div>
-                                <div class="img-item">
-                                    <a href="#" data-id="4">
-                                        <img src="{{ asset('img/Rectangle 25.png') }}" alt="shoe image">
-                                    </a>
-                                </div>
-                                <div class="img-item">
-                                    <a href="#" data-id="5">
-                                        <img src="{{ asset('img/Rectangle 26.png') }}" alt="shoe image">
-                                    </a>
-                                </div>
+                                @foreach ($product->productImages as $item)
+                                    <div class="img-item">
+                                        <a href="#" data-id="{{ $item->id }}">
+                                            <img src="{{ asset($item->image) }}" style="width: 100px;" alt="shoe image">
+                                        </a>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -58,14 +75,14 @@
                     <div class="product-content">
 
                         <div class="product-detail">
-                            <div class="product-name">{{ $product->name}} </div>
-                            <p style="min-height: 110px;">{{ $product->description}}</p>
+                            <div class="product-name">{{ $product->name }} </div>
+                            <p style="min-height: 110px;">{{ $product->description }}</p>
                             <h3 class="tar"> Tarkibi</h3>
                             <div class="inf">
 
                                 <ul>
                                     @foreach (json_decode($product->ingredients) as $ingredient)
-                                    <li>{{ $ingredient }}</li>
+                                        <li>{{ $ingredient }}</li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -74,10 +91,10 @@
 
                         <div class="purchase-info">
                             <div class="narx">
-                                <p>Narx: <span class="narx2">{{ $product->cost}} so'm</span></p>
+                                <p>Narx: <span class="narx2">{{ $product->cost }} so'm</span></p>
                             </div>
 
-                        <a href={{ route('orders', $product->id )}} type="button">Buyurtma berish</a>
+                            <a href={{ route('orders', $product->id) }} type="button">Buyurtma berish</a>
                         </div>
                     </div>
                 </div>
