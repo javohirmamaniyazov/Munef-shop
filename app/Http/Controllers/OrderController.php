@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function create($id) {
+    public function create($id)
+    {
         $product = Product::findOrFail($id);
         return view('orders.index', compact('product'));
     }
 
-    public function store(Request $request, $id){
+    public function store(Request $request, $id)
+    {
         $product = Product::findOrFail($id);
 
         $request->validate([
@@ -30,8 +32,24 @@ class OrderController extends Controller
         return redirect('/')->with('success', 'Product created successfully.');
     }
 
-    public function index() {
-        $orders = Order::get();
+    public function storeWithoutProduct(Request $request)
+    {
+        $request->validate([
+            'fullname' => 'required|string|max:255',
+            'phone' => 'required|string',
+        ]);
+
+        Order::create([
+            'fullname' => $request->input('fullname'),
+            'phone' => $request->input('phone'),
+        ]);
+
+        return redirect('/')->with('success', 'Order created successfully.');
+    }
+
+    public function index()
+    {
+        $orders = Order::getRecord()->get();
 
         return view('admin.orders.index', compact('orders'));
     }

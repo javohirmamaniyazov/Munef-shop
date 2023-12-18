@@ -1,3 +1,5 @@
+@include('admin.layouts.app')
+    
     <div class="container-scroller">
         <!-- partial:partials/_sidebar.html -->
         @include('admin.layouts.sidebar')
@@ -31,7 +33,7 @@
                                                     <td class="py-1">
                                                         <img src="{{ asset($product->image) }}" alt="image" />
                                                     </td>
-                                                    <td> </td>
+                                                    <td> {{ $product->user_name}}</td>
                                                     <td> {{ $product->name }} </td>
                                                     <td>  {{ $product->cost }} so'm </td>
                                                     <td class="d-flex" style="margin-top: 10px; border: none;">

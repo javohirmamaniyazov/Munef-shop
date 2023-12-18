@@ -16,11 +16,18 @@ class Product extends Model
         'description',
         'image',
         'cost',
+        'ingredients',
         'user_id'
     ];
 
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public static function getProduct()
+    {
+        return self::select('products.*', 'users.name as user_name')
+            ->join('users', 'users.id', '=', 'products.user_id');
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     public function index() {
-        $products = Product::get();
+        $products = Product::getProduct()->get();
         return view('admin.products.index', compact('products'));
     }
 
@@ -29,8 +29,11 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:2000',
             'cost' => 'required|string',
-            'image' => 'required|mimes:jpeg,png,jpg|max:5120'
+            'image' => 'required|mimes:jpeg,png,jpg|max:5120',
+            'ingredients' => 'required|array',
         ]);
+
+        $ingredients = json_encode($request->input('ingredients'));
         
         $image = $request->file('image');
 
@@ -41,6 +44,7 @@ class ProductController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'cost' => $request->input('cost'),
+            'ingredients' => $ingredients,
             'user_id' => Auth::user()->id,
             'image' => 'storage/'.$path,
         ]);

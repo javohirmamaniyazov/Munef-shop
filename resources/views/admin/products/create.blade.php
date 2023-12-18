@@ -1,3 +1,4 @@
+    @include('admin.layouts.app')
     <div class="container-scroller">
         <!-- partial:../../partials/_sidebar.html -->
         @include('admin.layouts.sidebar')
@@ -18,8 +19,8 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="exampleInputName1">Product Name</label>
-                                            <input type="text" name="name" class="form-control" id="exampleInputName1"
-                                                placeholder="Product Name">
+                                            <input type="text" name="name" class="form-control"
+                                                id="exampleInputName1" placeholder="Product Name">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail3">Product Cost</label>
@@ -28,18 +29,42 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label>File upload</label>
-                                            <input type="file" name="image" class="file-upload-default">
-                                            <div class="input-group col-xs-12">
-                                                <input type="text" name="image"
-                                                    class="form-control file-upload-info" disabled
-                                                    placeholder="Product Image">
-                                                <span class="input-group-append">
-                                                    <button class="file-upload-browse btn btn-primary"
-                                                        type="button">Upload</button>
-                                                </span>
-                                            </div>
+                                            <label for="imageInput">File upload</label><br>
+                                            <input class="form-control file-upload-info" type="file" name="image"
+                                                id="imageInput">
                                         </div>
+
+                                        <div class="form-group" id="ingredients-container">
+                                            <label for="ingredients">Ingredients</label>
+                                            <div class="ingredient-row" >
+                                                <input type="text" name="ingredients[]" class="form-control mb-1"
+                                                    placeholder="Enter the Ingredient">
+                                            </div>
+                                            <button type="button" class="add-ingredient">+</button>
+                                        </div>
+
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                let ingredientsContainer = document.getElementById('ingredients-container');
+                                                let addIngredientButton = document.querySelector('.add-ingredient');
+
+                                                addIngredientButton.addEventListener('click', function() {
+                                                    let ingredientRow = document.createElement('div');
+                                                    ingredientRow.classList.add('ingredient-row');
+
+                                                    let input = document.createElement('input');
+                                                    input.type = 'text';
+                                                    input.name = 'ingredients[]';
+                                                    input.classList.add('form-control');
+                                                    input.placeholder = 'Enter Ingredient';
+
+                                                    ingredientRow.appendChild(input);
+                                                    ingredientsContainer.insertBefore(ingredientRow, addIngredientButton);
+                                                });
+                                            });
+                                        </script>
+
+
                                         <div class="form-group">
                                             <label for="exampleTextarea1">Description</label>
                                             <textarea class="form-control" name="description" id="exampleTextarea1" placeholder="Type...." rows="4"></textarea>
@@ -53,17 +78,6 @@
                     </div>
                 </div>
                 <!-- content-wrapper ends -->
-                <!-- partial:../../partials/_footer.html -->
-                <footer class="footer">
-                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
-                            bootstrapdash.com 2020</span>
-                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
-                                href="https://www.bootstrapdash.com/bootstrap-admin-template/"
-                                target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
-                    </div>
-                </footer>
-                <!-- partial -->
             </div>
             <!-- main-panel ends -->
         </div>

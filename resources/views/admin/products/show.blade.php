@@ -64,16 +64,9 @@
                             <div class="inf">
 
                                 <ul>
-                                    <li>nationalist</li>
-                                    <li>care</li>
-                                    <li>recession</li>
-                                    <li>farewell</li>
-                                    <li>memory</li>
-                                    <li>spring</li>
-                                    <li>headline </li>
-                                    <li>prosecution</li>
-                                    <li>miner </li>
-                                    <li>relinquish</li>
+                                    @foreach (json_decode($product->ingredients) as $ingredient)
+                                    <li>{{ $ingredient }}</li>
+                                    @endforeach
                                 </ul>
                             </div>
 

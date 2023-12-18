@@ -25,7 +25,12 @@ Route::get('/', function () {
 
 // order section
 Route::get('product/{id}/order', [OrderController::class, 'create'])->name('orders');
-Route::post('product/{id}/order', [OrderController::class, 'store'])->name('order.create');
+
+Route::post('product/{id}/order', [OrderController::class, 'store'])->name('order.create.product');
+
+// Route for creating an order without a product ID
+Route::post('order', [OrderController::class, 'storeWithoutProduct'])->name('order.create.no-product');
+
 
 // contact section
 Route::get('/contact', [DashboardController::class, 'contact'])->name('contact');

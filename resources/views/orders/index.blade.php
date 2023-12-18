@@ -41,7 +41,7 @@
 
             </div>
             <div class="aloqa">
-                <form action="{{ route('order.create', $product->id ) }}" method="post">
+                <form action="{{ route('order.create.product', $product->id ) }}" method="post">
                     @csrf
                     <input type="text" name="fullname" placeholder="Ismingizni kiriting">
                     <input class="raqam" type="text" name="phone" placeholder="Telefon raqamingizni kiriting">

@@ -21,4 +21,10 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public static function getRecord()
+    {
+        return self::select('orders.*', 'products.name as product_name')
+            ->join('products', 'products.id', '=', 'orders.product_id');
+    }
 }
